@@ -82,9 +82,6 @@ class Symptomclass(BaseModel):
     symptoms: List[str]
 
 
-app = FastAPI()
-
-
 @app.post("/predict")
 def func(s: Symptomclass):
     input = []
@@ -99,6 +96,9 @@ def func(s: Symptomclass):
         'disease': pred
     }
 
+@app.options("/predict")
+async def options_handler():
+    return {"status": "ok"}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=3004)
